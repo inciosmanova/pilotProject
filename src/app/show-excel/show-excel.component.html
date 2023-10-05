@@ -1,0 +1,12 @@
+<div class="container py-3">
+    <h1 class="header">Pilot Proyekt</h1>
+    <div class="btn_box d-flex pb-3">
+        <div class="change_file_design">
+            <input type="file" (change)="onFileSelected($event)">
+            <button  class="btn upload">Load Excel File</button>
+        </div>
+        <button class="btn add">+ Add New</button>
+    </div>
+    <div #tabulator></div>
+
+</div>

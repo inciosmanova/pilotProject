@@ -1,0 +1,22 @@
+.header {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.btn_box {
+    .btn {
+        background-color: #0f2bffbf;
+        color: #fff;
+        margin: 0px 5px;
+    }
+}
+.change_file_design{
+    position: relative;
+    input{
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+}
