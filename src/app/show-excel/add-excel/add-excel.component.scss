@@ -1,0 +1,45 @@
+.container {
+  padding: 40px 20px;
+}
+
+.btn {
+  border: 1px solid #0f2bffbf;
+  color: #0f2bffbf;
+  margin: 0px 5px;
+}
+.confirm {
+  background-color: #0f2bffbf;
+  color: #fff;
+  margin: 0px 5px;
+}
+.header{
+  font-weight: 600;
+  margin: 0;
+}
+
+.paragraph{
+   font-size: 14px;
+   font-weight: 400;
+}
+
+.form-group{
+  margin: 10px 0px;
+}
+input ,select{
+  height: 47px;
+  background: #f1f0f0;
+  border: 1px solud #f1f0f0;
+  &:focus{
+    background: #f1f0f0;
+   outline: none;
+  }
+}
+label{
+  font-size: 14px;
+  font-weight: 400;
+  padding-bottom: 5px;
+}
+.alert{
+  color: red;
+  padding: 2px;
+}

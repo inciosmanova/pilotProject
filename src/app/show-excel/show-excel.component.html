@@ -5,7 +5,7 @@
             <input type="file" (change)="onFileSelected($event)">
             <button  class="btn upload">Load Excel File</button>
         </div>
-        <button class="btn add">+ Add New</button>
+        <button class="btn add" (click)="openDialog()">+ Add New</button>
     </div>
     <div #tabulator></div>
 
