@@ -1,10 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Tabulator } from 'tabulator-tables';
 import * as XLSX from 'xlsx';
 import { AddExcelComponent } from './add-excel/add-excel.component';
-
-
+import {TabulatorFull as Tabulator} from 'tabulator-tables';
 @Component({
   selector: 'app-show-excel',
   templateUrl: './show-excel.component.html',
@@ -17,33 +15,45 @@ export class ShowExcelComponent implements OnInit {
   ];
 
   columnNames: any[] = [
-    { title: "id", field: "id", width: '15%' },
-    { title: "len", field: "len", width: '25%' },
-    { title: "wkt", field: "wkt", width: '25%' },
-    { title: "status", field: "status", width: '25%' }
+    { title: "id", field: "id", width: '5%' },
+    { title: "len", field: "len", width: '35%' },
+    { title: "wkt", field: "wkt", width: '40%' },
+    { title: "status", field: "status", width: '10%' }
     ,
     {
       title: 'Actions',
       formatter: (cell:any, formatterParams:any, onRendered:any) => {
         // Create custom HTML for edit and delete buttons
         return `
-          <button class="edit-button">Edit</button>
-          <button class="delete-button">Delete</button>
+          <button class="edit-button custom_btn"><img class="edit-button" src="../../assets/image/edit.svg" alt=""></button>
+          <button class="delete-button custom_btn"><img class="delete-button" src="../../assets/image/delete.svg" alt="">
+          </button>
+          <button class="map-button custom_btn" ><img  class="map-button" src="../../assets/image/map.svg" alt="">
+          </button>
         `;
       },
       cellClick: (e:any, cell:any) => {
         // Handle button click events
         const button = e.target as HTMLButtonElement;
         if (button.classList.contains('edit-button')) {
-          // Handle edit action, e.g., open a modal for editing
+          // you can do editing process
           const rowData = cell.getRow().getData();
-          console.log('Edit clicked for ID:', rowData.id);
+          this.openDialog(rowData)
         } else if (button.classList.contains('delete-button')) {
-          // Handle delete action, e.g., show a confirmation dialog
+          // you can do delete process
           const rowData = cell.getRow().getData();
           console.log('Delete clicked for ID:', rowData.id);
+          this.tableData=this.tableData.filter(res=>res.id!==rowData.id)
+          console.log(this.tableData);
+          this.drawTable()
+          
+        } else if (button.classList.contains('map-button')) {
+          // Handle delete action, e.g., show a confirmation dialog
+          const rowData = cell.getRow().getData();
+          console.log('Mpt clicked for ID:', rowData.id);
         }
-      },
+      }
+      , width: '10%'
       },
     // ... (other columns)
   ];
@@ -93,29 +103,31 @@ export class ShowExcelComponent implements OnInit {
 
   reader?.readAsArrayBuffer(file);
 }
-openDialog(){
+openDialog(data:any){
   if(this.tableData.length<=0){
     alert('Xahis olunur excel filesini secin')
   }else{
       const dialogRef = this.dialog.open(AddExcelComponent, {
-    data: {},width:'25%'
+    data: data,width:'25%'
   });
 
   dialogRef.afterClosed().subscribe(result => {
-    debugger
-
-    if(result.id==0){
-      let addForm={
-      id:this.tableData[0].id+1,
+    let addForm={
+      id:result.id,
       len:result.len,
-      wkt:'',
+      wkt:result.wkt,
       status:result.status,
     }
+    if(result.id==0){
+    addForm.id=this.tableData[0].id+1
     this.tableData.unshift(addForm)
-    this.drawTable()
 
+    }else{
+      this.tableData.map((res,i)=>{
+        res.id==addForm.id ? this.tableData[i]=addForm :''
+      })
     }
-
+    this.drawTable()
   });
 }
   }

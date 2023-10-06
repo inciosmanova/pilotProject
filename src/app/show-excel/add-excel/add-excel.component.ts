@@ -19,11 +19,12 @@ export class AddExcelComponent implements OnInit{
     this.createNewForm()
   }
    createNewForm(){
+    
   this.excelForm=  this.formbuilder.group({
-    id:[0],
-    len:['',Validators.required],
-    wkt:[''],
-    status:['1',Validators.required],
+    id:[this.data?.id || 0],
+    len:[this.data?.len ||'',Validators.required],
+    wkt:[this.data?.wkt ||''],
+    status:[this.data?.status || '1',Validators.required],
   })
    }
 
