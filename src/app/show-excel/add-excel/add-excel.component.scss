@@ -1,14 +1,17 @@
+$btn_color: #0f2bffbf;
+$input_color: #f1f0f0;
+
+
 .container {
   padding: 40px 20px;
 }
-
 .btn {
-  border: 1px solid #0f2bffbf;
-  color: #0f2bffbf;
+  border: 1px solid $btn_color;
+  color: $btn_color;
   margin: 0px 5px;
 }
 .confirm {
-  background-color: #0f2bffbf;
+  background-color: $btn_color;
   color: #fff;
   margin: 0px 5px;
 }
@@ -27,10 +30,10 @@
 }
 input ,select{
   height: 47px;
-  background: #f1f0f0;
-  border: 1px solud #f1f0f0;
+  background: $input_color;
+  border: 1px solud $input_color;
   &:focus{
-    background: #f1f0f0;
+    background: $input_color;
    outline: none;
   }
 }

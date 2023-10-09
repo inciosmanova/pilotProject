@@ -3,22 +3,32 @@
     <div class="btn_box d-flex pb-3">
         <div class="change_file_design">
             <input type="file" (change)="onFileSelected($event)">
-            <button  class="btn upload">Load Excel File</button>
+            <button class="btn upload">Load Excel File</button>
         </div>
         <button class="btn add" (click)="openDialog({})">+ Add New</button>
     </div>
-    <div #tabulator></div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div #tabulator></div>
+        </div>
+        <div class="col-lg-4" *ngIf="showMap">
+            <app-map [coordinates]="coordinates"></app-map>
+        </div>
+    </div>
 
     <div class="btn_box d-flex pt-3">
-      <div class="change_file_design">
-         <button  class="btn add"  (click)='pieChart()'>Analiz 1</button >
-      </div>
-      <button class="btn add" (click)="barChart()" >Analiz 2</button>
-  </div>
-  <div style="width: 45%;" class="py-2" *ngIf="tableData.length>0"><canvas id="barChart" ></canvas></div>
+        <div class="change_file_design">
+            <button class="btn add" (click)='pieChart()'>Analiz 1</button>
+        </div>
+        <button class="btn add" (click)="barChart()">Analiz 2</button>
+    </div>
+    <div class="row d-flex align-items-center pt-3">
+        <div class="col-lg-6" *ngIf="tableData.length>0">
+            <div style="width: 100%;"  ><canvas id="pieChart"></canvas></div>
 
-  <div style="width: 45%;" class="py-2" *ngIf="tableData.length>0"><canvas id="pieChart" ></canvas></div>
-
+        </div>
+        <div class="col-lg-6" *ngIf="tableData.length>0">
+            <div style="width:100%;" ><canvas id="barChart"></canvas></div>
+        </div>
+    </div>
 </div>
-
-<app-map></app-map>

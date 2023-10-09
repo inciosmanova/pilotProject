@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 import { AddExcelComponent } from './add-excel/add-excel.component';
 import { TabulatorFull as Tabulator } from 'tabulator-tables';
 import { Chart } from 'chart.js';
+import { BarChartData, Table } from '../_interface/tableData';
 
 @Component({
   selector: 'app-show-excel',
@@ -12,20 +13,25 @@ import { Chart } from 'chart.js';
 })
 export class ShowExcelComponent implements OnInit {
   @ViewChild('tabulator', { static: true }) tabulatorElement!: ElementRef;
+  coordinates: string = ''
+  showMap: boolean = false
+  tableData: Table[] = [];
+  tabulator: any;
+  constructor( private dialog: MatDialog ) {}
+  ngOnInit(): void {
+    this.drawTable();
+  }
 
-  tableData: any[] = [
-  ];
-
-  columnNames: any[] = [
-    { title: "id", field: "id", width: '5%' },
-    { title: "len", field: "len", width: '35%' },
-    { title: "wkt", field: "wkt", width: '40%' },
+  columnNames = [
+    { title: "id", field: "id", width: '10%' },
+    { title: "len", field: "len", width: '30%' },
+    { title: "wkt", field: "wkt", width: '30%' },
     { title: "status", field: "status", width: '10%' }
     ,
     {
       title: 'Actions',
       formatter: (cell: any, formatterParams: any, onRendered: any) => {
-        // Create custom HTML for edit and delete buttons
+        // Create custom HTML for edit , delete and map buttons
         return `
           <button class="edit-button custom_btn"><img class="edit-button" src="../../assets/image/edit.svg" alt=""></button>
           <button class="delete-button custom_btn"><img class="delete-button" src="../../assets/image/delete.svg" alt="">
@@ -50,27 +56,16 @@ export class ShowExcelComponent implements OnInit {
           this.drawTable()
 
         } else if (button.classList.contains('map-button')) {
-          // Handle delete action, e.g., show a confirmation dialog
+          // you can do mapp process
           const rowData = cell.getRow().getData();
-          console.log('Mpt clicked for ID:', rowData.id);
+          this.showMap = false
+          this.showMap = true
+          this.coordinates = rowData.wkt
         }
       }
-      , width: '10%'
-    },
-    // ... (other columns)
+      , width: '20%'
+    }
   ];
-
-  tabulator: any;
-
-  ngOnInit(): void {
-    this.drawTable();
-  }
-  constructor(
-    private dialog: MatDialog
-  ) {
-
-  }
-
   private drawTable(): void {
     this.tabulator = new Tabulator(this.tabulatorElement.nativeElement, {
       height: "311px",
@@ -83,6 +78,7 @@ export class ShowExcelComponent implements OnInit {
 
 
   onFileSelected(event: any) {
+    //download file excel to grid 
     const file: File = event.target.files[0];
     const reader: FileReader = new FileReader();
 
@@ -93,7 +89,7 @@ export class ShowExcelComponent implements OnInit {
       // Now you can access the data from the Excel file
       const firstSheetName = workbook.SheetNames[0];
       const worksheet: XLSX.WorkSheet = workbook.Sheets[firstSheetName];
-      const excelData = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      const excelData: Table[] = XLSX.utils.sheet_to_json(worksheet, { raw: true });
 
 
       this.tableData = excelData
@@ -103,10 +99,10 @@ export class ShowExcelComponent implements OnInit {
       this.drawTable()
 
     };
-
     reader?.readAsArrayBuffer(file);
   }
   openDialog(data: any) {
+   //i use this method for opening dialog
     if (this.tableData.length <= 0) {
       alert('Xahis olunur excel filesini secin')
     } else {
@@ -134,7 +130,13 @@ export class ShowExcelComponent implements OnInit {
       });
     }
   }
+
+
+//Charts
   barChart() {
+
+    //crate bar char 
+    //calculate operations
     let sumLen0: number = 0;
     let sumLen1: number = 0;
     let sumLen2: number = 0;
@@ -148,7 +150,7 @@ export class ShowExcelComponent implements OnInit {
 
       }
     })
-    const data = [
+    const data: BarChartData[] = [
       { status: 0, len: sumLen0 },
       { status: 1, len: sumLen1 },
       { status: 2, len: sumLen2 },
@@ -162,7 +164,7 @@ export class ShowExcelComponent implements OnInit {
           labels: data.map(row => row.status),
           datasets: [
             {
-              label: 'Lenlerin cemi',
+              label: 'Lenlərin cəmi',
               data: data.map(row => row.len)
             }
           ]
@@ -171,6 +173,8 @@ export class ShowExcelComponent implements OnInit {
     );
   }
   pieChart() {
+    //crate pie char 
+    //calculate operations
     let status1: any = []
     let status2: any = []
     let status0: any = []
@@ -179,20 +183,13 @@ export class ShowExcelComponent implements OnInit {
         status0.push(res.status)
       } else if (res.status == 1) {
         status1.push(res.status)
-
       } else {
         status2.push(res.status)
-
-
       }
 
     })
     let calculatePercent = status0.length + status1.length + status2.length
-
-
     var chrt = (document as any).getElementById("pieChart").getContext("2d");
-
-
     new Chart(chrt, {
       type: 'pie',
       data: {

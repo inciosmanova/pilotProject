@@ -4,6 +4,7 @@
 @import 'tabulator-tables/dist/css/tabulator.min.css';
 @import 'tabulator-tables';
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300&family=Roboto:wght@300&display=swap");
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 *{
@@ -12,17 +13,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   box-sizing: border-box;
 }
 
-@import "node_modules/ol/ol.css";
 
 html,
 body {
   margin: 0;
   height: 100%;
-}
-
-#map {
-  // position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
 }
