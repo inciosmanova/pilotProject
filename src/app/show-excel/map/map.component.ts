@@ -7,9 +7,7 @@ import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
 import { fromLonLat } from 'ol/proj';
-import { LineString } from 'ol/geom';
 import { Style, Stroke } from 'ol/style';
 import WKT from 'ol/format/WKT';
 
@@ -28,7 +26,7 @@ private destroyMap(): void {
   }
 }
 createMap(){
- 
+
 debugger
   // Parse the LINESTRING coordinates from WKT
   const wktString =this.coordinates;
@@ -63,7 +61,7 @@ debugger
       zoom: 4,
     }),
   });
-  
+
   const lineStringFeature = new Feature({
     geometry: coordinates,
   });
@@ -92,7 +90,7 @@ debugger
       this.destroyMap();
       this.createMap();
     }
- 
+
   }
 }
 
