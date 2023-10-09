@@ -9,5 +9,16 @@
     </div>
     <div #tabulator></div>
 
+    <div class="btn_box d-flex pt-3">
+      <div class="change_file_design">
+         <button  class="btn add"  (click)='pieChart()'>Analiz 1</button >
+      </div>
+      <button class="btn add" (click)="barChart()" >Analiz 2</button>
+  </div>
+  <div style="width: 45%;" class="py-2" *ngIf="tableData.length>0"><canvas id="barChart" ></canvas></div>
+
+  <div style="width: 45%;" class="py-2" *ngIf="tableData.length>0"><canvas id="pieChart" ></canvas></div>
 
 </div>
+
+<app-map></app-map>

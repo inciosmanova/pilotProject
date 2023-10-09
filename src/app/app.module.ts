@@ -9,12 +9,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddExcelComponent } from './show-excel/add-excel/add-excel.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { NgChartsModule } from 'ng2-charts';
+import { MapComponent } from './show-excel/map/map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShowExcelComponent,
-    AddExcelComponent
+    AddExcelComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     HttpClientModule,
     FormsModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
